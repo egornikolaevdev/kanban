@@ -1,0 +1,24 @@
+.container {
+  background-color: var(--color-bg-default);
+  border-radius: 4px;
+  width: 260px;
+  height: 85vh;
+  overflow-y: scroll;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+  border: 1px solid gray;
+  margin-left: 7px;
+  scrollbar-width: none;
+  overflow-y: scroll;
+  text-align: center;
+  margin: 0 var(--space-xs);
+}
+.container::-webkit-scrollbar {
+  display: none;
+}
+.taskList {
+  padding: 3px;
+  background-color: var(--color-bg-default);
+  flex-grow: 1;
+  min-height: 70vh;
+}
