@@ -1,5 +1,6 @@
 import { Suspense, lazy } from 'react';
 import { Navigate, Route, Routes } from 'react-router-dom';
+import { Loader } from '@consta/uikit/Loader';
 
 const BoardPage = lazy(() => import('./Board'));
 const BacklogPage = lazy(() => import('./Backlog'));
@@ -12,10 +13,10 @@ const Pages = () => {
       <Route path="*" element={<Navigate to="/" replace={true} />} />
     </Routes>
   );
-  //Добавить fallback={<Loader/>} в Suspense
+
   return (
     <>
-      <Suspense>{routes}</Suspense>
+      <Suspense fallback={<Loader />}>{routes}</Suspense>
     </>
   );
 };

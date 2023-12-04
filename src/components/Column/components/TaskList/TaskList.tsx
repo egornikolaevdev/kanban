@@ -12,6 +12,7 @@ const TaskList = () => {
     <div className={classes.list}>
       {mockTasks?.map((item) => (
         <TaskCard
+          key={item.id}
           id={item.id}
           title={item.title || 'Title'}
           description={item.desc || ''}

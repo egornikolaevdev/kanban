@@ -1,7 +1,7 @@
 import { useContext } from 'react';
-import Column from '../../../components/Column/Column';
+import Column from '../../../../components/Column/Column';
 import { Text } from '@consta/uikit/Text';
-import { AppContext, AppContextType } from '../../../store/utils/context';
+import { AppContext, AppContextType } from '../../../../store/utils/context';
 import classes from './ColumnList.module.css';
 
 const ColumnList = () => {
@@ -9,7 +9,7 @@ const ColumnList = () => {
   return (
     <div className={classes.columns}>
       {columns.map((item, index) => (
-        <div>
+        <div key={index}>
           <Text weight="semibold" size="m" className={classes.header}>
             {item.title}
           </Text>

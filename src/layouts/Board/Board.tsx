@@ -9,7 +9,7 @@ import { IconAdd } from '@consta/icons/IconAdd';
 import { IconFolderClosed } from '@consta/icons/IconFolderClosed';
 import { cnMixSpace } from '@consta/uikit/MixSpace';
 import { AppContext } from '../../store/utils/context';
-import ColumnList from './components/ColumnList';
+import ColumnList from './components/ColumnList/ColumnList';
 import { IColumn } from '../../types/IColumn';
 import AddTaskModal from '../../shared/components/AddTaskModal';
 import { useState } from 'react';
@@ -33,9 +33,6 @@ const columns: IColumn[] = [
     title: 'FOR RELEASE',
   },
 ];
-const deleteTask = (taskId: number) => {
-  console.log(`DeleteTask${taskId}`);
-};
 
 const handleDragEnd: OnDragEndResponder = (result: DropResult) => {
   const { destination, source, draggableId } = result;
@@ -61,7 +58,6 @@ const Board = () => {
     <AppContext.Provider
       value={{
         columns,
-        deleteTask,
         isModalOpen,
         setIsModalOpen,
         closeModal,

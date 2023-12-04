@@ -9,8 +9,7 @@ import { Button } from '@consta/uikit/Button';
 import { Card } from '@consta/uikit/Card';
 import { ContextMenu } from '@consta/uikit/ContextMenu';
 import { IconKebab } from '@consta/icons/IconKebab';
-import { useContext, useRef, useState } from 'react';
-import { AppContext, AppContextType } from '../../store/utils/context';
+import { useRef, useState } from 'react';
 
 type TaskCardProps = {
   id: number;
@@ -22,12 +21,22 @@ type MenuItem = {
   event: () => void;
 };
 
+const toBacklog = (taskId: number) => {
+  console.log(`to Backlog task${taskId}`);
+};
+const deleteTask = (taskId: number) => {
+  console.log(`DeleteTask${taskId}`);
+};
+
 const TaskCard = ({ id, title, description }: TaskCardProps) => {
-  const { deleteTask } = useContext(AppContext) as AppContextType;
   const ref = useRef<HTMLButtonElement>(null);
   const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
 
   const menuItems: MenuItem[] = [
+    {
+      label: 'Вернуть в бэклог',
+      event: () => toBacklog(id),
+    },
     {
       label: 'Удалить',
       event: () => deleteTask(id),
