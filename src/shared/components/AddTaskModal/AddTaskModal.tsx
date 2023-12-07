@@ -1,19 +1,32 @@
 import { Modal } from '@consta/uikit/Modal';
 import { TextField } from '@consta/uikit/TextField';
 import { Text } from '@consta/uikit/Text';
-import { useContext } from 'react';
+import { useContext, useState } from 'react';
 import { AppContext, AppContextType } from '../../../store/utils/context';
 import classes from './AddTaskModal.module.css';
 import { Button } from '@consta/uikit/Button';
+import { Select } from '@consta/uikit/Select';
 import { Controller, SubmitHandler, useForm } from 'react-hook-form';
 
 type ModalFields = {
-  id: string;
   title: string;
   description: string;
 };
+type SelectItemsType = {
+  key: number;
+  label: string;
+};
+const selectItems: SelectItemsType[] = [
+  { key: 1, label: 'Backlog' },
+  { key: 2, label: 'To do' },
+  { key: 3, label: 'Process' },
+  { key: 4, label: 'Check' },
+  { key: 5, label: 'Done' },
+];
 const AddTaskModal = () => {
   const { isModalOpen, closeModal } = useContext(AppContext) as AppContextType;
+  const [selectItemValue, setSelectItemValue] =
+    useState<SelectItemsType | null>(null);
   const {
     register,
     control,
@@ -38,35 +51,11 @@ const AddTaskModal = () => {
 
       <form onSubmit={handleSubmit(submitForm)}>
         <Controller
-          name="id"
-          control={control}
-          render={({ field: { value, onChange } }) => (
-            <TextField
-              label="ID"
-              placeholder="Введите значение"
-              size="m"
-              width="full"
-              required
-              value={value}
-              {...register('id', { required: true })}
-              onChange={({ value }) => {
-                onChange(value);
-              }}
-              caption={
-                errors.id?.type === 'required'
-                  ? 'Поле обязательно для заполнения'
-                  : ''
-              }
-              status={errors.id?.type === 'required' ? 'alert' : undefined}
-            />
-          )}
-        />
-        <Controller
           name="title"
           control={control}
           render={({ field: { value, onChange } }) => (
             <TextField
-              label="Заголовок"
+              label="Название"
               placeholder="Введите значение"
               width="full"
               required
@@ -100,6 +89,15 @@ const AddTaskModal = () => {
               }}
             />
           )}
+        />
+        <Select
+          label="Статус"
+          placeholder="Выберите из списка"
+          items={selectItems}
+          value={selectItemValue}
+          onChange={({ value }) => setSelectItemValue(value)}
+          getItemLabel={(item) => item.label}
+          getItemKey={(item) => item.key}
         />
         <div className={classes.buttonsContainer}>
           <Button

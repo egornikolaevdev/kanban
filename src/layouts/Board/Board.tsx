@@ -22,15 +22,15 @@ const columns: IColumn[] = [
   },
   {
     id: '2',
-    title: 'DEV',
+    title: 'PROCESS',
   },
   {
     id: '3',
-    title: 'QA',
+    title: 'CHECK',
   },
   {
     id: '4',
-    title: 'FOR RELEASE',
+    title: 'DONE',
   },
 ];
 
@@ -68,7 +68,7 @@ const Board = () => {
           <div className={classes.buttons_container}>
             <Button
               className={cnMixSpace({ m: 's' })}
-              label="Бэклог"
+              label="Backlog"
               view="secondary"
               size="s"
               iconRight={IconFolderClosed}
@@ -76,7 +76,7 @@ const Board = () => {
             />
             <Button
               className={cnMixSpace({ m: 's' })}
-              label="Создать задачу"
+              label="Create task"
               view="primary"
               size="s"
               iconRight={IconAdd}
