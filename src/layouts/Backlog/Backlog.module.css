@@ -1,8 +1,9 @@
-.header {
-  font-size: 30px;
-  font-weight: 900;
+.container {
+  display: flex;
+  justify-content: center;
+  margin: var(--space-m) 0;
 }
 
-.buttonContainer {
-  display: flex;
+.tasks_container {
+  width: 70%;
 }
