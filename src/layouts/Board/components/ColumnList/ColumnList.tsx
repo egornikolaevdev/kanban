@@ -13,7 +13,7 @@ const ColumnList = () => {
           <Text weight="semibold" size="m" className={classes.header}>
             {item.title}
           </Text>
-          <Column key={index} id={item.id} />
+          <Column key={index} id={item.id} taskList={item.taskList} />
         </div>
       ))}
     </div>

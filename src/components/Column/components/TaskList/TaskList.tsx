@@ -1,21 +1,20 @@
 import TaskCard from '../../../TaskCard/TaskCard';
 import classes from './TaskList.module.css';
-import { toDoApi } from '../../../../store/services/ToDoApi';
+import { ITask } from '../../../../types/ITask';
 
-const { useGetToDoListQuery } = toDoApi;
+type TaskListProps = {
+  taskList: ITask[];
+};
 
-const TaskList = () => {
-  const { data } = useGetToDoListQuery();
-  const mockTasks = data?.filter((item) => item.id <= 15);
-
+const TaskList = ({ taskList }: TaskListProps) => {
   return (
     <div className={classes.list}>
-      {mockTasks?.map((item) => (
+      {taskList?.map((item) => (
         <TaskCard
           key={item.id}
           id={item.id}
           title={item.title || 'Title'}
-          description={item.desc || ''}
+          description={item.status || ''}
         />
       ))}
     </div>

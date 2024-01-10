@@ -1,11 +1,16 @@
 import { Droppable, DroppableProvided } from 'react-beautiful-dnd';
 import classes from './Column.module.css';
 import TaskList from './components/TaskList/TaskList';
+import { ITask } from '../../types/ITask';
 
 type ColumnProps = {
   id: string;
+  taskList: ITask[];
 };
-const Column = ({ id }: ColumnProps) => {
+
+const Column = ({ id, taskList }: ColumnProps) => {
+  // console.log('taskList', list);
+
   return (
     <div>
       <div className={classes.container}>
@@ -16,7 +21,7 @@ const Column = ({ id }: ColumnProps) => {
               ref={provided.innerRef}
               {...provided.droppableProps}
             >
-              {id === '1' ? <TaskList /> : []}
+              {<TaskList taskList={taskList} />}
               {provided.placeholder}
             </div>
           )}
