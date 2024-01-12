@@ -1,45 +1,65 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 import { ITask } from '../../types/ITask';
 import { removeItemByID } from '../../utils/removeItem';
+import { IColumn } from '../../types/IColumn';
 
 type TaskStatusType = {
   status: 'Q' | 'P' | 'C' | 'D';
-  from: ITask[];
-  to: ITask[];
+  fromColumnId: string;
+  toColumnId: string;
   task: ITask;
 };
-type ColumnsStatesType = {
-  toDo: ITask[];
-  inProgress: ITask[];
-  check: ITask[];
-  done: ITask[];
-};
-const columnsStates: ColumnsStatesType = {
-  toDo: [],
-  inProgress: [],
-  check: [],
-  done: [],
-};
+const columns: IColumn[] = [
+  {
+    title: 'TODO',
+    id: '0',
+    taskList: [],
+  },
+  {
+    title: 'PROCESS',
+    id: '1',
+    taskList: [],
+  },
+  {
+    title: 'CHECK',
+    id: '2',
+    taskList: [],
+  },
+  {
+    title: 'DONE',
+    id: '3',
+    taskList: [],
+  },
+];
 
 export const taskMoveSlice = createSlice({
   name: 'taskMoveSlice',
-  initialState: columnsStates,
+  initialState: columns,
   reducers: {
+    setColumnsData: (state, action) => {
+      state[0].taskList = action.payload;
+    },
     changeStatus: (state, action: PayloadAction<TaskStatusType>) => {
+      const toColumn = Number(action.payload.toColumnId);
+      const fromColumn = Number(action.payload.fromColumnId);
+      const task = action.payload.task;
+      const taskStatus = action.payload.status;
+
       const newTask: ITask = {
-        id: action.payload.task.id,
-        status: action.payload.status,
-        desc: action.payload.task.desc,
-        title: action.payload.task.title,
+        id: task.id,
+        status: taskStatus,
+        desc: task.desc,
+        title: task.title,
       };
-      console.log('task', action.payload.task);
-      console.log('FROM', action.payload.from);
-      console.log('TO', action.payload.to);
-      action.payload.to.push(newTask);
-      // state.toDo = removeItemByID(action.payload.task.id, action.payload.from);
+
+      state[toColumn].taskList.push(newTask);
+      state[fromColumn].taskList = removeItemByID(
+        action.payload.task.id,
+        state[fromColumn].taskList
+      );
     },
   },
 });
 
-export const { changeStatus } = taskMoveSlice.actions;
+export const { changeStatus, setColumnsData } = taskMoveSlice.actions;
 export default taskMoveSlice.reducer;

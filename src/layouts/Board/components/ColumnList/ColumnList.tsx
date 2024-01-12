@@ -1,11 +1,11 @@
-import { useContext } from 'react';
 import Column from '../../../../components/Column/Column';
 import { Text } from '@consta/uikit/Text';
-import { AppContext, AppContextType } from '../../../../store/utils/context';
 import classes from './ColumnList.module.css';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../../../store';
 
 const ColumnList = () => {
-  const { columns } = useContext(AppContext) as AppContextType;
+  const columns = useSelector((state: RootState) => state.taskReducer);
   return (
     <div className={classes.columns}>
       {columns.map((item, index) => (

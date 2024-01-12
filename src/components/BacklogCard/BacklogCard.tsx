@@ -13,7 +13,7 @@ const BacklogCard = ({ title, id, description }: BacklogCardProps) => {
   return (
     <>
       <Card className={classes.card}>
-        <Text>{`${id} ${title} ${description}`}</Text>
+        <Text>{`${id} | ${title} | ${description}`}</Text>
         <ContextMenuCustom taskID={id} />
       </Card>
     </>

@@ -9,8 +9,6 @@ type ColumnProps = {
 };
 
 const Column = ({ id, taskList }: ColumnProps) => {
-  // console.log('taskList', list);
-
   return (
     <div>
       <div className={classes.container}>
