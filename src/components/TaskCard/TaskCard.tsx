@@ -7,14 +7,16 @@ import classes from './TaskCard.module.css';
 import { Text } from '@consta/uikit/Text';
 import { Card } from '@consta/uikit/Card';
 import ContextMenuCustom from '../ContextMenuCustom/ContextMenuCustom';
+import { ITask } from '../../types/ITask';
 
 type TaskCardProps = {
   id: number;
   title: string;
   description: string;
+  taskObj: ITask;
 };
 
-const TaskCard = ({ id, title, description }: TaskCardProps) => {
+const TaskCard = ({ id, title, description, taskObj }: TaskCardProps) => {
   return (
     <Draggable draggableId={`${id}`} key={id} index={id}>
       {(provided: DraggableProvided, snapshot: DraggableStateSnapshot) => (
@@ -30,7 +32,7 @@ const TaskCard = ({ id, title, description }: TaskCardProps) => {
         >
           <div className={classes.taskID}>
             <Text size="s">{id}</Text>
-            <ContextMenuCustom taskID={id} />
+            <ContextMenuCustom task={taskObj} />
           </div>
           <Text className={classes.taskTitle} size="s">
             {title}

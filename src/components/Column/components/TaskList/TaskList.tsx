@@ -12,7 +12,8 @@ const TaskList = ({ taskList }: TaskListProps) => {
       {taskList?.map((item) => (
         <TaskCard
           key={item.id}
-          id={item.id}
+          taskObj={item}
+          id={Number(item.id)}
           title={item.title || 'Title'}
           description={item.status || ''}
         />

@@ -1,6 +1,6 @@
 export interface ITask {
-  id: number;
+  id: number | string;
   title?: string;
   desc?: string;
-  status?: 'Q' | 'P' | 'C' | 'D';
+  status: 'Q' | 'P' | 'C' | 'D' | 'B';
 }

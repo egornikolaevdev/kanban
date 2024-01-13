@@ -5,7 +5,7 @@ import { useSelector } from 'react-redux';
 import { RootState } from '../../../../store';
 
 const ColumnList = () => {
-  const columns = useSelector((state: RootState) => state.taskReducer);
+  const columns = useSelector((state: RootState) => state.boardReducer);
   return (
     <div className={classes.columns}>
       {columns.map((item, index) => (

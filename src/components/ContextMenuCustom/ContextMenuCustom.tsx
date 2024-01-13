@@ -3,41 +3,47 @@ import { ContextMenu } from '@consta/uikit/ContextMenu';
 import { IconKebab } from '@consta/icons/IconKebab';
 import { useRef, useState } from 'react';
 import classes from './ContextMenuCustom.module.css';
+import { useDispatch } from 'react-redux';
+import { removeTask, showDetails } from '../../store/reducers/boardSlice';
+import { ITask } from '../../types/ITask';
+import { toBacklog } from '../../store/reducers/backlogSlice';
 
 type MenuItemType = {
   label: string;
   event: () => void;
 };
 type ContextMenuProps = {
-  taskID: number;
+  task: ITask;
 };
 
-const openDetails = (taskId: number) => {
-  console.log(`Open details${taskId}`);
-};
-const toBacklog = (taskId: number) => {
-  console.log(`to Backlog task${taskId}`);
-};
-const deleteTask = (taskId: number) => {
-  console.log(`DeleteTask${taskId}`);
-};
-
-const ContextMenuCustom = ({ taskID }: ContextMenuProps) => {
+const ContextMenuCustom = ({ task }: ContextMenuProps) => {
+  const dispatch = useDispatch();
   const ref = useRef<HTMLButtonElement>(null);
   const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
+  const openDetails = (task: ITask) => {
+    dispatch(showDetails(task));
+  };
+
+  const moveTo = (task: ITask) => {
+    dispatch(toBacklog(task));
+    dispatch(removeTask(task));
+  };
+  const deleteTask = (task: ITask) => {
+    dispatch(removeTask(task));
+  };
 
   const menuItems: MenuItemType[] = [
     {
       label: 'Details',
-      event: () => openDetails(taskID),
+      event: () => openDetails(task),
     },
     {
-      label: 'Return to Backlog',
-      event: () => toBacklog(taskID),
+      label: 'Move to Backlog/Board',
+      event: () => moveTo(task),
     },
     {
       label: 'Remove',
-      event: () => deleteTask(taskID),
+      event: () => deleteTask(task),
     },
   ];
 

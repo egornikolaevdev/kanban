@@ -8,39 +8,73 @@ import classes from './AddTaskModal.module.css';
 import { Button } from '@consta/uikit/Button';
 import { Select } from '@consta/uikit/Select';
 import { Controller, SubmitHandler, useForm } from 'react-hook-form';
+import { addTaskToBacklog } from '../../../store/reducers/backlogSlice';
+import { useDispatch } from 'react-redux';
+import { addTaskToBoard } from '../../../store/reducers/boardSlice';
 
 type ModalFields = {
   title: string;
   description: string;
+  status: SelectItemsType;
 };
 type SelectItemsType = {
   key: number;
   label: string;
+  status: 'Q' | 'P' | 'C' | 'D' | 'B';
 };
 const selectItems: SelectItemsType[] = [
-  { key: 1, label: 'Backlog' },
-  { key: 2, label: 'To do' },
-  { key: 3, label: 'Process' },
-  { key: 4, label: 'Check' },
-  { key: 5, label: 'Done' },
+  { key: 1, label: 'Backlog', status: 'B' },
+  { key: 2, label: 'To do', status: 'Q' },
+  { key: 3, label: 'Process', status: 'P' },
+  { key: 4, label: 'Check', status: 'C' },
+  { key: 5, label: 'Done', status: 'D' },
 ];
 const AddTaskModal = () => {
-  const [selectItemValue, setSelectItemValue] =
-    useState<SelectItemsType | null>(null);
+  const dispatch = useDispatch();
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const {
     register,
     control,
     handleSubmit,
+    reset,
     formState: { errors },
   } = useForm<ModalFields>();
 
   const closeModal = () => {
     setIsModalOpen(false);
+    reset();
   };
   const submitForm: SubmitHandler<ModalFields> = (data) => {
-    //сделать экшен на добавление задачи(Redux)
-    console.log(data);
+    if (data.status.key === 1) {
+      dispatch(
+        addTaskToBacklog({
+          id: '',
+          title: data.title,
+          desc: data.description,
+          status: data.status.status,
+        })
+      );
+      console.log('Backlog', {
+        title: data.title,
+        desc: data.description,
+        status: data.status,
+      });
+    } else {
+      dispatch(
+        addTaskToBoard({
+          id: '',
+          title: data.title,
+          desc: data.description,
+          status: data.status.status,
+        })
+      );
+      console.log('Board', {
+        title: data.title,
+        desc: data.description,
+        status: data.status,
+      });
+    }
+    closeModal();
   };
 
   return (
@@ -104,14 +138,31 @@ const AddTaskModal = () => {
               />
             )}
           />
-          <Select
-            label="Статус"
-            placeholder="Выберите из списка"
-            items={selectItems}
-            value={selectItemValue}
-            onChange={({ value }) => setSelectItemValue(value)}
-            getItemLabel={(item) => item.label}
-            getItemKey={(item) => item.key}
+          <Controller
+            name="status"
+            control={control}
+            render={({ field: { value, onChange } }) => (
+              <Select
+                label="Статус"
+                placeholder="Выберите из списка"
+                getItemLabel={(item) => item.label}
+                getItemKey={(item) => item.key}
+                items={selectItems}
+                value={value}
+                onChange={({ value }) => {
+                  onChange(value);
+                }}
+                required
+                caption={
+                  errors.status?.type === 'required'
+                    ? 'Поле обязательно для заполнения'
+                    : ''
+                }
+                status={
+                  errors.status?.type === 'required' ? 'alert' : undefined
+                }
+              />
+            )}
           />
           <div className={classes.buttonsContainer}>
             <Button

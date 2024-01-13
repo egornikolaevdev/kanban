@@ -5,10 +5,7 @@ import {
 } from 'react-beautiful-dnd';
 import classes from './Board.module.css';
 import ColumnList from './components/ColumnList/ColumnList';
-import {
-  changeStatus,
-  setColumnsData,
-} from '../../store/reducers/taskMoveSlice';
+import { changeStatus, setColumnsData } from '../../store/reducers/boardSlice';
 import { useDispatch } from 'react-redux';
 import { findItemByID } from '../../utils/findItem';
 import { toDoApi } from '../../store/services/ToDoApi';
@@ -20,15 +17,15 @@ const { useGetToDoListQuery } = toDoApi;
 
 const Board = () => {
   const dispatch = useDispatch();
-  const columns = useSelector((state: RootState) => state.taskReducer);
+  const columns = useSelector((state: RootState) => state.boardReducer);
   const { data } = useGetToDoListQuery();
 
   useEffect(() => {
-    if (data) {
-      const mockData = data?.filter((item) => item.id <= 5);
+    if (data && columns[0].taskList.length === 0) {
+      const mockData = data?.filter((item) => Number(item.id) <= 5);
       dispatch(setColumnsData(mockData));
     }
-  }, [data, dispatch]);
+  }, [columns, data, dispatch]);
 
   const handleDragEnd: OnDragEndResponder = (result: DropResult) => {
     const { destination, source, draggableId } = result;

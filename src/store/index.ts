@@ -1,10 +1,12 @@
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
 import { toDoApi } from './services/ToDoApi';
-import taskReducer from './reducers/taskMoveSlice';
+import boardReducer from './reducers/boardSlice';
+import backlogReducer from './reducers/backlogSlice';
 
 const rootReducer = combineReducers({
   [toDoApi.reducerPath]: toDoApi.reducer,
-  taskReducer: taskReducer,
+  boardReducer: boardReducer,
+  backlogReducer: backlogReducer,
 });
 
 export const setupStore = () => {

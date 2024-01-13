@@ -1,31 +1,25 @@
+import { useSelector } from 'react-redux';
 import BacklogCard from '../../../../components/BacklogCard/BacklogCard';
 import classes from './BacklogCardList.module.css';
+import { RootState } from '../../../../store';
 
 const BacklogCardList = () => {
-  const backlogTasks = [
-    {
-      id: 1,
-      title: 'Task ',
-      description: 'Task from backlog',
-    },
-    {
-      id: 2,
-      title: 'Another task',
-      description: 'Another task from backlog',
-    },
-  ];
+  const backlogTaskList = useSelector(
+    (state: RootState) => state.backlogReducer
+  );
 
   return (
-    <div className={classes.list}>
-      {backlogTasks.map((item) => (
-        <BacklogCard
-          key={item.id}
-          title={item.title}
-          id={item.id}
-          description={item.description}
-        />
-      ))}
-    </div>
+    <>
+      {backlogTaskList.length > 0 ? (
+        <div className={classes.list}>
+          {backlogTaskList.map((item) => (
+            <BacklogCard key={item.id} task={item} />
+          ))}
+        </div>
+      ) : (
+        'No data'
+      )}
+    </>
   );
 };
 
