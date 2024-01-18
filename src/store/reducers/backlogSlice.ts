@@ -10,7 +10,7 @@ export const backlogSlice = createSlice({
     toBacklog: (state, action: PayloadAction<ITask>) => {
       state.push(action.payload);
     },
-    removeFromBacklog: () => {},
+    removeFromBacklog: (state, action) => {},
     addTaskToBacklog: (state, action: PayloadAction<ITask>) => {
       const newTask: ITask = {
         id: `${state.length + 1}Y`,
