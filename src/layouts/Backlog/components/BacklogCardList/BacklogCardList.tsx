@@ -1,5 +1,7 @@
 import { useSelector } from 'react-redux';
 import BacklogCard from '../../../../components/BacklogCard/BacklogCard';
+import { ResponsesEmptyBox } from '@consta/uikit/ResponsesEmptyBox';
+import { Card } from '@consta/uikit/Card';
 import classes from './BacklogCardList.module.css';
 import { RootState } from '../../../../store';
 
@@ -11,13 +13,15 @@ const BacklogCardList = () => {
   return (
     <>
       {backlogTaskList.length > 0 ? (
-        <div className={classes.list}>
+        <Card className={classes.tasks_container}>
           {backlogTaskList.map((item) => (
             <BacklogCard key={item.id} task={item} />
           ))}
-        </div>
+        </Card>
       ) : (
-        'No data'
+        <div className={classes.empty}>
+          <ResponsesEmptyBox size="l" actions={<></>} description={<></>} />
+        </div>
       )}
     </>
   );
