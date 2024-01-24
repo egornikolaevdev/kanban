@@ -1,9 +1,11 @@
 .columns {
   display: flex;
   flex-direction: row;
-  justify-content: start;
+  justify-content: space-evenly;
+  width: 100%;
 }
+
 .header {
-  color: #175aac;
   margin: var(--space-xs);
+  color: #175aac;
 }

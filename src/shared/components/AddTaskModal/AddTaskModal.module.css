@@ -1,11 +1,12 @@
 .modal {
-  width: 450px;
+  width: 28rem;
   padding: var(--space-m);
 }
+
 .buttonsContainer {
   display: flex;
   flex-direction: row;
-  justify-content: end;
   gap: var(--space-xs);
+  justify-content: end;
   margin-top: var(--space-s);
 }

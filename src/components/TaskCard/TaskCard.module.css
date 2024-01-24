@@ -1,32 +1,33 @@
 .taskCard {
-  color: #000;
-  margin: 4px 7px;
-  min-height: 90px;
-  cursor: pointer;
   display: flex;
-  justify-content: space-between;
   flex-direction: column;
+  justify-content: space-between;
+  min-height: 7.5rem;
+  margin: var(--space-2xs) var(--space-xs);
+  color: #000;
   background-color: var(--color-bg-default);
+  cursor: pointer;
 }
 
-.taskID {
+.taskInfo {
   display: flex;
-  margin-bottom: 0.3rem;
   justify-content: space-between;
-  align-items: center;
+  margin-bottom: 0.3rem;
   padding-left: 0.5rem;
 }
+
 .taskTitle {
   display: flex;
   margin: 0;
-  justify-content: center;
   font-weight: bold;
+  text-align: left;
 }
-.taskDesc {
+
+.avatar {
   display: flex;
-  justify-content: center;
-  padding-bottom: 0.3rem;
+  justify-content: end;
 }
+
 .buttonsContainer {
   display: flex;
   justify-content: flex-end;

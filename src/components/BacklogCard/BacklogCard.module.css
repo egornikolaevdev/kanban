@@ -1,7 +1,7 @@
 .card {
   display: flex;
-  margin: var(--space-xs);
-  padding: var(--space-m);
   align-items: center;
   justify-content: space-between;
+  margin: var(--space-xs);
+  padding: var(--space-m);
 }
