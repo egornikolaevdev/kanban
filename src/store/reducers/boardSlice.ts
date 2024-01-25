@@ -66,6 +66,11 @@ export const boardSlice = createSlice({
         status: taskStatus,
         desc: task.desc,
         title: task.title,
+        priority: task.priority,
+        storyPoints: task.storyPoints,
+        startDate: task.startDate,
+        endDate: task.endDate,
+        executor: task.executor,
       };
 
       state[toColumn].taskList.push(newTask);
@@ -84,8 +89,15 @@ export const boardSlice = createSlice({
     showDetails: (state, action: PayloadAction<ITask>) => {
       console.log(
         action.payload.id,
+        action.payload.title,
+        action.payload.desc,
         action.payload.status,
-        action.payload.title
+        action.payload.priority,
+        action.payload.storyPoints,
+        action.payload.startDate,
+        action.payload.endDate,
+        action.payload.executor?.fullName,
+        action.payload.executor?.position
       );
     },
     addTaskToBoard: (state, action: PayloadAction<ITask>) => {
@@ -101,6 +113,11 @@ export const boardSlice = createSlice({
         title: action.payload.title,
         desc: action.payload.desc,
         status: action.payload.status,
+        priority: action.payload.priority,
+        storyPoints: action.payload.storyPoints,
+        startDate: action.payload.startDate,
+        endDate: action.payload.endDate,
+        executor: action.payload.executor,
       };
       state[toColumn].taskList.push(newTask);
     },

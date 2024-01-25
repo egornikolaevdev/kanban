@@ -7,27 +7,80 @@ import { IconAdd } from '@consta/icons/IconAdd';
 import classes from './AddTaskModal.module.css';
 import { Button } from '@consta/uikit/Button';
 import { Select } from '@consta/uikit/Select';
+import { UserSelect } from '@consta/uikit/UserSelect';
+import { DatePicker } from '@consta/uikit/DatePicker';
 import { Controller, SubmitHandler, useForm } from 'react-hook-form';
 import { addTaskToBacklog } from '../../../store/reducers/backlogSlice';
 import { useDispatch } from 'react-redux';
 import { addTaskToBoard } from '../../../store/reducers/boardSlice';
+import { IEmployee } from '../../../types/IEmployee';
+import enLocale from 'date-fns/locale/en-US';
+
+type StatusSelectType = {
+  key: number;
+  label: string;
+  value: 'Q' | 'P' | 'C' | 'D' | 'B';
+};
+
+type PrioritySelectType = {
+  key: number;
+  value: 'Low' | 'Medium' | 'High';
+};
 
 type ModalFields = {
   title: string;
   description: string;
-  status: SelectItemsType;
+  status: StatusSelectType;
+  executor: IEmployee;
+  startDate: Date;
+  endDate: Date;
+  storyPoints: string;
+  priority: PrioritySelectType;
 };
-type SelectItemsType = {
-  key: number;
-  label: string;
-  status: 'Q' | 'P' | 'C' | 'D' | 'B';
-};
-const selectItems: SelectItemsType[] = [
-  { key: 1, label: 'Backlog', status: 'B' },
-  { key: 2, label: 'To do', status: 'Q' },
-  { key: 3, label: 'Process', status: 'P' },
-  { key: 4, label: 'Check', status: 'C' },
-  { key: 5, label: 'Done', status: 'D' },
+
+const statusSelectItems: StatusSelectType[] = [
+  { key: 1, label: 'Backlog', value: 'B' },
+  { key: 2, label: 'To do', value: 'Q' },
+  { key: 3, label: 'Process', value: 'P' },
+  { key: 4, label: 'Check', value: 'C' },
+  { key: 5, label: 'Done', value: 'D' },
+];
+
+const prioritySelectItems: PrioritySelectType[] = [
+  { key: 1, value: 'Low' },
+  { key: 2, value: 'Medium' },
+  { key: 3, value: 'High' },
+];
+
+const users: IEmployee[] = [
+  {
+    id: 1,
+    name: 'Egor',
+    surname: 'Nikolaev',
+    fullName: 'Nikolaev Egor Aleksandrovich',
+    position: 'Middle frontend developer',
+  },
+  {
+    id: 2,
+    name: 'Ivan',
+    surname: 'Ivanov',
+    fullName: 'Ivanov Ivan Ivanovich',
+    position: 'Junior frontend developer',
+  },
+  {
+    id: 3,
+    name: 'Vasiliy',
+    surname: 'Vasiliev',
+    fullName: 'Vasiliev Vasiliy Vasilievich',
+    position: 'Senior backend developer',
+  },
+  {
+    id: 4,
+    name: 'Petr',
+    surname: 'Petrov',
+    fullName: 'Petrov Petr Petrovich',
+    position: 'Team leader',
+  },
 ];
 const AddTaskModal = () => {
   const dispatch = useDispatch();
@@ -51,7 +104,12 @@ const AddTaskModal = () => {
           id: '',
           title: data.title,
           desc: data.description,
-          status: data.status.status,
+          status: data.status.value,
+          executor: data.executor,
+          startDate: data.startDate,
+          endDate: data.endDate,
+          storyPoints: Number(data.storyPoints),
+          priority: data.priority.value,
         })
       );
       console.log('Backlog', {
@@ -65,7 +123,12 @@ const AddTaskModal = () => {
           id: '',
           title: data.title,
           desc: data.description,
-          status: data.status.status,
+          status: data.status.value,
+          executor: data.executor,
+          startDate: data.startDate,
+          endDate: data.endDate,
+          storyPoints: Number(data.storyPoints),
+          priority: data.priority.value,
         })
       );
       console.log('Board', {
@@ -80,8 +143,8 @@ const AddTaskModal = () => {
   return (
     <>
       <Button
-        className={cnMixSpace({ m: 's' })}
-        label="Create new task"
+        className={cnMixSpace({ mT: 's', pH: '2xl' })}
+        label="Create task"
         view="primary"
         size="s"
         iconRight={IconAdd}
@@ -94,7 +157,7 @@ const AddTaskModal = () => {
         onEsc={() => closeModal()}
       >
         <Text size="xl" weight="semibold">
-          Добавить задачу
+          Creating new task
         </Text>
 
         <form onSubmit={handleSubmit(submitForm)}>
@@ -103,8 +166,9 @@ const AddTaskModal = () => {
             control={control}
             render={({ field: { value, onChange } }) => (
               <TextField
-                label="Название"
-                placeholder="Введите значение"
+                className={classes.formField}
+                label="Task title"
+                placeholder="Enter value"
                 width="full"
                 required
                 value={value}
@@ -113,9 +177,7 @@ const AddTaskModal = () => {
                   onChange(value);
                 }}
                 caption={
-                  errors.title?.type === 'required'
-                    ? 'Поле обязательно для заполнения'
-                    : ''
+                  errors.title?.type === 'required' ? 'Field is required' : ''
                 }
                 status={errors.title?.type === 'required' ? 'alert' : undefined}
               />
@@ -126,9 +188,11 @@ const AddTaskModal = () => {
             control={control}
             render={({ field: { value, onChange } }) => (
               <TextField
-                label="Описание"
-                placeholder="Введите значение"
+                label="Description"
+                className={classes.formField}
+                placeholder="Enter value"
                 type="textarea"
+                minRows={3}
                 width="full"
                 value={value}
                 {...register('description', { required: true })}
@@ -138,25 +202,97 @@ const AddTaskModal = () => {
               />
             )}
           />
+
+          <Controller
+            name="executor"
+            control={control}
+            render={({ field: { value, onChange } }) => (
+              <UserSelect
+                className={classes.formField}
+                label="Executor"
+                placeholder="Select from"
+                getItemLabel={(item) => item.fullName}
+                getItemKey={(item) => item.id}
+                items={users}
+                value={value}
+                onChange={({ value }) => {
+                  onChange(value);
+                }}
+              />
+            )}
+          />
+          <Controller
+            name="storyPoints"
+            control={control}
+            render={({ field: { value, onChange } }) => (
+              <TextField
+                label="Story points"
+                className={classes.formField}
+                placeholder="Enter value"
+                type="textarea"
+                width="full"
+                value={value}
+                {...register('storyPoints', { required: true })}
+                onChange={({ value }) => {
+                  onChange(value);
+                }}
+              />
+            )}
+          />
+          <div className={classes.dateFieldsContainer}>
+            <Controller
+              name="startDate"
+              control={control}
+              render={({ field: { value, onChange } }) => (
+                <DatePicker
+                  label="Start date"
+                  className={classes.formDateField}
+                  placeholder="Select date"
+                  locale={enLocale}
+                  type="date"
+                  value={value}
+                  onChange={({ value }) => {
+                    onChange(value);
+                  }}
+                />
+              )}
+            />
+            <Controller
+              name="endDate"
+              control={control}
+              render={({ field: { value, onChange } }) => (
+                <DatePicker
+                  label="End date"
+                  className={classes.formDateField}
+                  placeholder="Select date"
+                  locale={enLocale}
+                  type="date"
+                  value={value}
+                  onChange={({ value }) => {
+                    onChange(value);
+                  }}
+                />
+              )}
+            />
+          </div>
           <Controller
             name="status"
             control={control}
             render={({ field: { value, onChange } }) => (
               <Select
-                label="Статус"
-                placeholder="Выберите из списка"
+                label="Status"
+                className={classes.formField}
+                placeholder="Select from"
                 getItemLabel={(item) => item.label}
                 getItemKey={(item) => item.key}
-                items={selectItems}
+                items={statusSelectItems}
                 value={value}
                 onChange={({ value }) => {
                   onChange(value);
                 }}
                 required
                 caption={
-                  errors.status?.type === 'required'
-                    ? 'Поле обязательно для заполнения'
-                    : ''
+                  errors.status?.type === 'required' ? 'Field is required' : ''
                 }
                 status={
                   errors.status?.type === 'required' ? 'alert' : undefined
@@ -164,13 +300,32 @@ const AddTaskModal = () => {
               />
             )}
           />
+          <Controller
+            name="priority"
+            control={control}
+            render={({ field: { value, onChange } }) => (
+              <Select
+                label="Priority"
+                className={classes.formField}
+                placeholder="Select from"
+                getItemLabel={(item) => item.value}
+                getItemKey={(item) => item.key}
+                items={prioritySelectItems}
+                value={value}
+                onChange={({ value }) => {
+                  onChange(value);
+                }}
+              />
+            )}
+          />
+
           <div className={classes.buttonsContainer}>
             <Button
-              label="Отмена"
+              label="Cancel"
               view="secondary"
               onClick={() => closeModal()}
             />
-            <Button label="Добавить" type="submit" />
+            <Button label="Create" type="submit" />
           </div>
         </form>
       </Modal>

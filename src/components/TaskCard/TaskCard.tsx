@@ -6,19 +6,17 @@ import {
 import classes from './TaskCard.module.css';
 import { Text } from '@consta/uikit/Text';
 import { Card } from '@consta/uikit/Card';
+import { Avatar } from '@consta/uikit/Avatar';
 import ContextMenuCustom from '../ContextMenuCustom/ContextMenuCustom';
 import { ITask } from '../../types/ITask';
 
 type TaskCardProps = {
-  id: number;
-  title: string;
-  description: string;
-  taskObj: ITask;
+  task: ITask;
 };
 
-const TaskCard = ({ id, title, description, taskObj }: TaskCardProps) => {
+const TaskCard = ({ task }: TaskCardProps) => {
   return (
-    <Draggable draggableId={`${id}`} key={id} index={id}>
+    <Draggable draggableId={`${task.id}`} key={task.id} index={Number(task.id)}>
       {(provided: DraggableProvided, snapshot: DraggableStateSnapshot) => (
         <Card
           form="square"
@@ -30,16 +28,16 @@ const TaskCard = ({ id, title, description, taskObj }: TaskCardProps) => {
           {...provided.dragHandleProps}
           ref={provided.innerRef}
         >
-          <div className={classes.taskID}>
-            <Text size="s">{id}</Text>
-            <ContextMenuCustom task={taskObj} />
+          <div className={classes.taskInfo}>
+            <div className={classes.taskTitle}>
+              <Text size="s">{`${task.title} ${task.id}`}</Text>
+            </div>
+            <ContextMenuCustom task={task} />
           </div>
-          <Text className={classes.taskTitle} size="s">
-            {title}
-          </Text>
-          <Text className={classes.taskDesc} size="s">
-            {description}
-          </Text>
+          <div className={classes.bottomContainer}>
+            <Text size="s">{task.priority}</Text>
+            <Avatar size="m" name={task.executor?.fullName} />
+          </div>
         </Card>
       )}
     </Draggable>

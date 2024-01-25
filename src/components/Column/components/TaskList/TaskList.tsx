@@ -12,10 +12,10 @@ const TaskList = ({ taskList }: TaskListProps) => {
       {taskList?.map((item) => (
         <TaskCard
           key={item.id}
-          taskObj={item}
-          id={Number(item.id)}
-          title={item.title || 'Title'}
-          description={item.status || ''}
+          task={item}
+          // id={Number(item.id)}
+          // title={item.title || 'Title'}
+          // description={item.status || ''}
         />
       ))}
     </div>

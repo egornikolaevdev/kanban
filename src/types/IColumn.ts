@@ -1,7 +1,7 @@
 import { ITask } from './ITask';
 
-export type IColumn = {
+export interface IColumn {
   title: string;
   id: string;
   taskList: ITask[];
-};
+}

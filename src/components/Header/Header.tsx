@@ -13,7 +13,7 @@ const Header = () => {
       <div className={classes.buttonsContainer}>
         <div className={classes.navButtonsContainer}>
           <Button
-            className={cnMixSpace({ m: 's' })}
+            className={cnMixSpace({ mT: 's', mR: 'xs', pH: '3xl' })}
             label="Board"
             view="secondary"
             size="s"
@@ -21,7 +21,7 @@ const Header = () => {
             onClick={() => navigate('/board')}
           />
           <Button
-            className={cnMixSpace({ m: 's' })}
+            className={cnMixSpace({ mT: 's', pH: '3xl' })}
             label="Backlog"
             view="secondary"
             size="s"

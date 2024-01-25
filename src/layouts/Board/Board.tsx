@@ -81,9 +81,7 @@ const Board = () => {
   return (
     <DragDropContext onDragEnd={handleDragEnd}>
       <div className={classes.board}>
-        <div className={classes.columns}>
-          <ColumnList />
-        </div>
+        <ColumnList />
       </div>
     </DragDropContext>
   );

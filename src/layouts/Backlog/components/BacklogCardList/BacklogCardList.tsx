@@ -13,7 +13,7 @@ const BacklogCardList = () => {
   return (
     <>
       {backlogTaskList.length > 0 ? (
-        <Card className={classes.tasks_container}>
+        <Card className={classes.tasksContainer}>
           {backlogTaskList.map((item) => (
             <BacklogCard key={item.id} task={item} />
           ))}

@@ -1,7 +1,7 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { ITask } from '../../types/ITask';
 
-type GetToDoListResponseType = {
+type GetTaskListResponseType = {
   userId: number;
   id: number;
   title: string;
@@ -9,13 +9,21 @@ type GetToDoListResponseType = {
 };
 
 const transformToDoResponse = (
-  response: GetToDoListResponseType[]
+  response: GetTaskListResponseType[]
 ): ITask[] => {
   return response.map((task) => ({
     id: task.id,
     title: task.title,
     desc: task.title,
     status: 'Q',
+    executor: {
+      id: 1,
+      name: 'Egor',
+      surname: 'Nikolaev',
+      fullName: 'Nikolaev Egor Aleksandrovich',
+      position: 'Middle frontend developer',
+    },
+    priority: 'Low',
   }));
 };
 export const toDoApi = createApi({
@@ -26,7 +34,7 @@ export const toDoApi = createApi({
         url: 'https://jsonplaceholder.typicode.com/todos',
         method: 'GET',
       }),
-      transformResponse: (response: GetToDoListResponseType[]) => {
+      transformResponse: (response: GetTaskListResponseType[]) => {
         return transformToDoResponse(response);
       },
     }),
