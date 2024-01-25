@@ -2,7 +2,7 @@
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  min-height: 7.5rem;
+  min-height: 7rem;
   margin: var(--space-2xs) var(--space-xs);
   color: #000;
   background-color: var(--color-bg-default);
@@ -35,4 +35,8 @@
   align-items: center;
   justify-content: space-between;
   padding-left: 0.5rem;
+}
+
+.priorityImage {
+  width: 1.2rem;
 }

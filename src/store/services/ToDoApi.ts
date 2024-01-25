@@ -23,7 +23,7 @@ const transformToDoResponse = (
       fullName: 'Nikolaev Egor Aleksandrovich',
       position: 'Middle frontend developer',
     },
-    priority: 'Low',
+    priority: 'Medium',
   }));
 };
 export const toDoApi = createApi({

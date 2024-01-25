@@ -7,7 +7,7 @@ export interface ITask {
   status: 'Q' | 'P' | 'C' | 'D' | 'B';
   executor?: IEmployee;
   storyPoints?: number;
-  priority?: 'Low' | 'Medium' | 'High';
+  priority: 'Low' | 'Medium' | 'High';
   startDate?: Date;
   endDate?: Date;
 }
