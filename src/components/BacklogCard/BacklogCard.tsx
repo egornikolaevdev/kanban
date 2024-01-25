@@ -5,16 +5,18 @@ import ContextMenuCustom from '../ContextMenuCustom/ContextMenuCustom';
 import { ITask } from '../../types/ITask';
 
 type BacklogCardProps = {
-  task: ITask;
+  taskList: ITask[];
 };
 
-const BacklogCard = ({ task }: BacklogCardProps) => {
+const BacklogCard = ({ taskList }: BacklogCardProps) => {
   return (
     <>
-      <Card className={classes.card}>
-        <Text>{`${task.id} | ${task.title} | ${task.desc}`}</Text>
-        <ContextMenuCustom task={task} />
-      </Card>
+      {taskList.map((task, index) => (
+        <Card className={classes.card} key={index + Number(task.id)}>
+          <Text>{`${task.id} | ${task.title} | ${task.desc}`}</Text>
+          <ContextMenuCustom task={task} />
+        </Card>
+      ))}
     </>
   );
 };

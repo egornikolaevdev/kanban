@@ -9,13 +9,12 @@ const BacklogCardList = () => {
   const backlogTaskList = useSelector(
     (state: RootState) => state.backlogReducer
   );
-
   return (
     <>
       {backlogTaskList.length > 0 ? (
         <Card className={classes.tasksContainer}>
           {backlogTaskList.map((item) => (
-            <BacklogCard key={item.id} task={item} />
+            <BacklogCard key={item.id} taskList={item.taskList} />
           ))}
         </Card>
       ) : (

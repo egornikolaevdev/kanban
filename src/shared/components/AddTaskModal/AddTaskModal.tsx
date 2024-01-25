@@ -9,6 +9,7 @@ import { Button } from '@consta/uikit/Button';
 import { Select } from '@consta/uikit/Select';
 import { UserSelect } from '@consta/uikit/UserSelect';
 import { DatePicker } from '@consta/uikit/DatePicker';
+import { IconClose } from '@consta/icons/IconClose';
 import { Controller, SubmitHandler, useForm } from 'react-hook-form';
 import { addTaskToBacklog } from '../../../store/reducers/backlogSlice';
 import { useDispatch } from 'react-redux';
@@ -40,7 +41,7 @@ type ModalFields = {
 
 const statusSelectItems: StatusSelectType[] = [
   { key: 1, label: 'Backlog', value: 'B' },
-  { key: 2, label: 'To do', value: 'Q' },
+  { key: 2, label: 'Queue', value: 'Q' },
   { key: 3, label: 'Process', value: 'P' },
   { key: 4, label: 'Check', value: 'C' },
   { key: 5, label: 'Done', value: 'D' },
@@ -98,44 +99,27 @@ const AddTaskModal = () => {
     reset();
   };
   const submitForm: SubmitHandler<ModalFields> = (data) => {
-    if (data.status.key === 1) {
-      dispatch(
-        addTaskToBacklog({
-          id: '',
-          title: data.title,
-          desc: data.description,
-          status: data.status.value,
-          executor: data.executor,
-          startDate: data.startDate,
-          endDate: data.endDate,
-          storyPoints: Number(data.storyPoints),
-          priority: data.priority.value,
-        })
-      );
-      console.log('Backlog', {
-        title: data.title,
-        desc: data.description,
-        status: data.status,
-      });
+    console.log('status', data.status);
+    const newTask = {
+      id: '',
+      title: data.title,
+      desc: data.description,
+      status: data?.status?.value || 'Q',
+      executor: data?.executor || undefined,
+      startDate: data?.startDate || undefined,
+      endDate: data?.endDate || undefined,
+      storyPoints: Number(data.storyPoints) || undefined,
+      priority: data?.priority?.value || 'Low',
+    };
+    if (!data.status) {
+      dispatch(addTaskToBoard(newTask));
+    } else if (data.status && data.status.key !== 1) {
+      newTask.status = statusSelectItems[data.status.key - 1].value;
+      console.log('123', newTask.status);
+      dispatch(addTaskToBoard(newTask));
     } else {
-      dispatch(
-        addTaskToBoard({
-          id: '',
-          title: data.title,
-          desc: data.description,
-          status: data.status.value,
-          executor: data.executor,
-          startDate: data.startDate,
-          endDate: data.endDate,
-          storyPoints: Number(data.storyPoints),
-          priority: data.priority.value,
-        })
-      );
-      console.log('Board', {
-        title: data.title,
-        desc: data.description,
-        status: data.status,
-      });
+      newTask.status = 'B';
+      dispatch(addTaskToBacklog(newTask));
     }
     closeModal();
   };
@@ -150,15 +134,19 @@ const AddTaskModal = () => {
         iconRight={IconAdd}
         onClick={() => setIsModalOpen(true)}
       />
-      <Modal
-        className={classes.modal}
-        isOpen={isModalOpen}
-        onClickOutside={() => closeModal()}
-        onEsc={() => closeModal()}
-      >
-        <Text size="xl" weight="semibold">
-          Creating new task
-        </Text>
+      <Modal className={classes.modal} isOpen={isModalOpen}>
+        <div className={classes.topContainer}>
+          <Text size="xl" weight="semibold">
+            Creating new task
+          </Text>
+          <Button
+            onlyIcon
+            iconLeft={IconClose}
+            size="s"
+            view="clear"
+            onClick={() => closeModal()}
+          />
+        </div>
 
         <form onSubmit={handleSubmit(submitForm)}>
           <Controller
@@ -195,7 +183,7 @@ const AddTaskModal = () => {
                 minRows={3}
                 width="full"
                 value={value}
-                {...register('description', { required: true })}
+                {...register('description')}
                 onChange={({ value }) => {
                   onChange(value);
                 }}
@@ -232,7 +220,7 @@ const AddTaskModal = () => {
                 type="textarea"
                 width="full"
                 value={value}
-                {...register('storyPoints', { required: true })}
+                {...register('storyPoints')}
                 onChange={({ value }) => {
                   onChange(value);
                 }}
@@ -287,16 +275,10 @@ const AddTaskModal = () => {
                 getItemKey={(item) => item.key}
                 items={statusSelectItems}
                 value={value}
+                required
                 onChange={({ value }) => {
                   onChange(value);
                 }}
-                required
-                caption={
-                  errors.status?.type === 'required' ? 'Field is required' : ''
-                }
-                status={
-                  errors.status?.type === 'required' ? 'alert' : undefined
-                }
               />
             )}
           />

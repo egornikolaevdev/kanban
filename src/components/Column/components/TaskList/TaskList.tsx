@@ -9,15 +9,7 @@ type TaskListProps = {
 const TaskList = ({ taskList }: TaskListProps) => {
   return (
     <div className={classes.list}>
-      {taskList?.map((item) => (
-        <TaskCard
-          key={item.id}
-          task={item}
-          // id={Number(item.id)}
-          // title={item.title || 'Title'}
-          // description={item.status || ''}
-        />
-      ))}
+      {taskList?.map((item) => <TaskCard key={item.id} task={item} />)}
     </div>
   );
 };

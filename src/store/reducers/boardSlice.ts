@@ -19,7 +19,7 @@ type TaskStatusesMapType = {
 
 const columns: IColumn[] = [
   {
-    title: 'TODO',
+    title: 'QUEUE',
     id: '0',
     taskList: [],
   },
