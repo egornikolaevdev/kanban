@@ -5,6 +5,12 @@
 
 .buttonsContainer {
   display: flex;
+  align-items: center;
   justify-content: space-between;
-  width: 95%;
+  width: 100%;
+  margin: 0 var(--space-2xl);
+}
+
+.navButtonsContainer {
+  display: flex;
 }
