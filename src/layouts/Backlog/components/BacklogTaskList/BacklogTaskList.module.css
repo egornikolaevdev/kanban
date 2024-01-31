@@ -1,5 +1,6 @@
 .tasksContainer {
-  width: 100%;
+  width: 20%;
+  margin: var(--space-s);
 }
 
 .empty {

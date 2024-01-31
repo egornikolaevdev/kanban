@@ -1,0 +1,12 @@
+.detailsContainer {
+    display: flex;
+    width: 70%;
+    gap: var(--space-s);
+    min-height: 80vh;
+    margin: var(--space-s);
+    padding: var(--space-m);
+}
+
+.infoBlock{
+    width: 50%;
+}

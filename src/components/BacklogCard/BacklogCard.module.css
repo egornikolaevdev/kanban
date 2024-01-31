@@ -2,7 +2,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  min-height: 7rem;
+  min-height: 3rem;
   margin: var(--space-xs);
-  padding: var(--space-m);
+  padding: var(--space-s) var(--space-m);
 }

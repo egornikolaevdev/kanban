@@ -1,9 +1,8 @@
-import { useSelector } from 'react-redux';
 import classes from './Backlog.module.css';
+import { useSelector } from 'react-redux';
 import BacklogTaskList from './components/BacklogTaskList/BacklogTaskList';
 import { RootState } from '../../store';
-import { Card } from '@consta/uikit/Card';
-import { Text } from '@consta/uikit/Text';
+import BacklogTaskDetails from './components/BacklogTaskDetails/BacklogTaskDetails.tsx';
 
 const Backlog = () => {
   const taskList = useSelector(
@@ -11,12 +10,8 @@ const Backlog = () => {
   );
   return (
     <div className={classes.container}>
-      <div className={classes.taskList}>
-        <BacklogTaskList taskList={taskList} />
-      </div>
-      <Card className={classes.detailsContainer}>
-        <Text size="l"> Details</Text>
-      </Card>
+      <BacklogTaskList taskList={taskList} />
+      <BacklogTaskDetails />
     </div>
   );
 };
