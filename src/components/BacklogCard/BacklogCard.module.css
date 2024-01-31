@@ -5,4 +5,10 @@
   min-height: 3rem;
   margin: var(--space-xs);
   padding: var(--space-s) var(--space-m);
+  transition: background-color 0.2s ease-in-out;
+}
+
+.card:hover {
+  background-color: rgb(233 233 233);
+  cursor: pointer;
 }

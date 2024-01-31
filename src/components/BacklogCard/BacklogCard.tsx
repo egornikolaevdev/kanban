@@ -11,7 +11,13 @@ type BacklogCardProps = {
 const BacklogCard = ({ task }: BacklogCardProps) => {
   return (
     <>
-      <Card className={classes.card} key={Number(task.id)}>
+      <Card
+        className={classes.card}
+        key={Number(task.id)}
+        onClick={() => {
+          console.log(`Task ${task.id}`);
+        }}
+      >
         <PriorityIcon taskPriority={task.priority} />
         <Text>{`${task.title}`}</Text>
         <ContextMenuCustom task={task} />
