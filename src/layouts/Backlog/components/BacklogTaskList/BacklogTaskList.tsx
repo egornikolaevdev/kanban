@@ -2,7 +2,7 @@ import { ResponsesEmptyBox } from '@consta/uikit/ResponsesEmptyBox';
 import { Card } from '@consta/uikit/Card';
 import classes from './BacklogTaskList.module.css';
 import { ITask } from '../../../../types/ITask';
-import BacklogCard from '../../../../components/BacklogCard/BacklogCard';
+import BacklogTaskCard from '../../../../components/BacklogCard/BacklogTaskCard';
 
 type BacklogTaskListProps = {
   taskList: ITask[];
@@ -13,7 +13,7 @@ const BacklogTaskList = ({ taskList }: BacklogTaskListProps) => {
       {taskList.length > 0 ? (
         <Card className={classes.tasksContainer}>
           {taskList.map((item) => (
-            <BacklogCard key={item.id} task={item} />
+            <BacklogTaskCard key={item.id} task={item} />
           ))}
         </Card>
       ) : (

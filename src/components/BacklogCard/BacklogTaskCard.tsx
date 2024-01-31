@@ -1,4 +1,4 @@
-import classes from './BacklogCard.module.css';
+import classes from './BacklogTaskCard.module.css';
 import { Card } from '@consta/uikit/Card';
 import { Text } from '@consta/uikit/Text';
 import ContextMenuCustom from '../ContextMenuCustom/ContextMenuCustom';
@@ -8,7 +8,7 @@ type BacklogCardProps = {
   task: ITask;
 };
 
-const BacklogCard = ({ task }: BacklogCardProps) => {
+const BacklogTaskCard = ({ task }: BacklogCardProps) => {
   return (
     <>
       <Card
@@ -26,4 +26,4 @@ const BacklogCard = ({ task }: BacklogCardProps) => {
   );
 };
 
-export default BacklogCard;
+export default BacklogTaskCard;
