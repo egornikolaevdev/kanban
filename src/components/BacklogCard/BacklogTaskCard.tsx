@@ -4,18 +4,20 @@ import { Text } from '@consta/uikit/Text';
 import ContextMenuCustom from '../ContextMenuCustom/ContextMenuCustom';
 import { ITask } from '../../types/ITask';
 import PriorityIcon from '../../shared/components/PriorityIcon';
+import { Dispatch } from 'react';
 type BacklogCardProps = {
   task: ITask;
+  setSelectedTask: Dispatch<ITask>;
 };
 
-const BacklogTaskCard = ({ task }: BacklogCardProps) => {
+const BacklogTaskCard = ({ task, setSelectedTask }: BacklogCardProps) => {
   return (
     <>
       <Card
         className={classes.card}
         key={Number(task.id)}
         onClick={() => {
-          console.log(`Task ${task.id}`);
+          setSelectedTask(task);
         }}
       >
         <PriorityIcon taskPriority={task.priority} />
