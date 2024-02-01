@@ -13,6 +13,13 @@ const backlogList: IColumn[] = [
         title: 'Backlog task',
         status: 'B',
         priority: 'Low',
+        executor: {
+          id: 1,
+          name: 'Egor',
+          surname: 'Nikolaev',
+          fullName: 'Nikolaev Egor Aleksandrovich',
+          position: 'Middle frontend developer',
+        },
       },
     ],
   },

@@ -8,6 +8,8 @@ import { Text } from '@consta/uikit/Text/index';
 import { User } from '@consta/uikit/User';
 import { ITask } from '../../types/ITask.ts';
 import { useState } from 'react';
+import { TextField } from '@consta/uikit/TextField/index';
+import PriorityIcon from '../../shared/components/PriorityIcon/PriorityIcon.tsx';
 
 const Backlog = () => {
   const taskList = useSelector(
@@ -32,9 +34,32 @@ const Backlog = () => {
               {taskSelected ? (
                 <>
                   <div className={classes.infoBlock}>
-                    <Text size="l">{taskSelected?.title}</Text>
+                    <TextField
+                      value={taskSelected.title}
+                      label="Title"
+                      readOnly
+                      view="clear"
+                      width="full"
+                    />
+                    <TextField
+                      value={taskSelected.status}
+                      label="Status"
+                      readOnly
+                      view="clear"
+                      width="full"
+                    />
+                    <TextField
+                      value={taskSelected.priority}
+                      label="Priority"
+                      readOnly
+                      view="clear"
+                      width="full"
+                    />
                   </div>
                   <div className={classes.infoBlock}>
+                    <Text className={classes.textLabel} view="secondary">
+                      Executor
+                    </Text>
                     <User
                       size="l"
                       width="full"
@@ -42,12 +67,34 @@ const Backlog = () => {
                         taskSelected?.executor?.fullName ||
                         'Исполнитель не назначен'
                       }
+                      style={{ paddingBottom: 'var(--space-s' }}
                     />
-                    <Text size="l"> {taskSelected?.id}</Text>
+                    <TextField
+                      value={
+                        taskSelected?.startDate?.toDateString() ||
+                        'Date is undefined'
+                      }
+                      label="Start date"
+                      readOnly
+                      view="clear"
+                      width="full"
+                    />
+                    <TextField
+                      value={
+                        taskSelected?.endDate?.toDateString() ||
+                        'Date is undefined'
+                      }
+                      label="End date"
+                      readOnly
+                      view="clear"
+                      width="full"
+                    />
                   </div>
                 </>
               ) : (
-                <div className={classes.emptyDetails}>Выберите задачу</div>
+                <div className={classes.emptyDetails}>
+                  <Text size="xl">Task is not selected</Text>
+                </div>
               )}
             </>
           </Card>

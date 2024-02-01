@@ -28,6 +28,7 @@
 
 .infoBlock {
   width: 50%;
+  padding: 1rem;
 }
 
 .emptyDetails {
@@ -35,4 +36,8 @@
   align-items: center;
   justify-content: center;
   width: 100%;
+}
+
+.textLabel {
+  padding-bottom: var(--space-xs);
 }
