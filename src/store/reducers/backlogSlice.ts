@@ -9,7 +9,7 @@ const backlogList: IColumn[] = [
     title: 'BACKLOG',
     taskList: [
       {
-        id: 10,
+        id: 6,
         title: 'Backlog task',
         status: 'B',
         priority: 'Low',
@@ -37,7 +37,6 @@ export const backlogSlice = createSlice({
     },
     addTaskToBacklog: (state, action: PayloadAction<ITask>) => {
       const newTask = action.payload;
-      newTask.id = 1000 - state.length;
       state[0].taskList.push(newTask);
     },
   },

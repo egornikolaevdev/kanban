@@ -58,20 +58,11 @@ export const boardSlice = createSlice({
     changeStatus: (state, action: PayloadAction<TaskStatusType>) => {
       const toColumn = Number(action.payload.toColumnId);
       const fromColumn = Number(action.payload.fromColumnId);
-      const task = action.payload.task;
+      // const task = action.payload.task;
       const taskStatus = action.payload.status;
 
-      const newTask: ITask = {
-        id: task.id,
-        status: taskStatus,
-        desc: task.desc,
-        title: task.title,
-        priority: task.priority,
-        storyPoints: task.storyPoints,
-        startDate: task.startDate,
-        endDate: task.endDate,
-        executor: task.executor,
-      };
+      const newTask: ITask = action.payload.task
+      newTask.status = taskStatus
 
       state[toColumn].taskList.push(newTask);
       state[fromColumn].taskList = removeItemByID(
@@ -102,23 +93,7 @@ export const boardSlice = createSlice({
     },
     addTaskToBoard: (state, action: PayloadAction<ITask>) => {
       const toColumn = Number(TASK_STATUSES_MAP[action.payload.status]);
-      const newTask: ITask = {
-        id:
-          [
-            ...state[0].taskList,
-            ...state[1].taskList,
-            ...state[2].taskList,
-            ...state[3].taskList,
-          ].length + 1,
-        title: action.payload.title,
-        desc: action.payload.desc,
-        status: action.payload.status,
-        priority: action.payload.priority,
-        storyPoints: action.payload.storyPoints,
-        startDate: action.payload.startDate,
-        endDate: action.payload.endDate,
-        executor: action.payload.executor,
-      };
+      const newTask: ITask = action.payload;
       state[toColumn].taskList.push(newTask);
     },
   },

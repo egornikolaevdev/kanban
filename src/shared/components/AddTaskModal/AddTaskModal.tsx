@@ -12,10 +12,11 @@ import { DatePicker } from '@consta/uikit/DatePicker';
 import { IconClose } from '@consta/icons/IconClose';
 import { Controller, SubmitHandler, useForm } from 'react-hook-form';
 import { addTaskToBacklog } from '../../../store/reducers/backlogSlice';
-import { useDispatch } from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import { addTaskToBoard } from '../../../store/reducers/boardSlice';
 import { IEmployee } from '../../../types/IEmployee';
 import enLocale from 'date-fns/locale/en-US';
+import {RootState} from "../../../store";
 
 type StatusSelectType = {
   key: number;
@@ -84,6 +85,9 @@ const users: IEmployee[] = [
   },
 ];
 const AddTaskModal = () => {
+  const backlogTasks = useSelector((state:RootState)=>state.backlogReducer[0].taskList)
+  const boardTasks = useSelector((state:RootState)=>state.boardReducer[0].taskList)
+  const allTasks = [...boardTasks, ...backlogTasks]
   const dispatch = useDispatch();
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const {
@@ -99,9 +103,9 @@ const AddTaskModal = () => {
     reset();
   };
   const submitForm: SubmitHandler<ModalFields> = (data) => {
-    console.log('status', data.status);
+    console.log('all', [...boardTasks, ...backlogTasks]);
     const newTask = {
-      id: '',
+      id: allTasks.length+1,
       title: data.title,
       desc: data.description,
       status: data?.status?.value || 'Q',
