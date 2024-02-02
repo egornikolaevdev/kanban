@@ -1,5 +1,6 @@
 .card {
   display: flex;
+  gap: var(--space-xs);
   align-items: center;
   justify-content: space-between;
   min-height: 3rem;
