@@ -9,7 +9,6 @@ import { User } from '@consta/uikit/User';
 import { ITask } from '../../types/ITask.ts';
 import { useState } from 'react';
 import { TextField } from '@consta/uikit/TextField/index';
-import PriorityIcon from '../../shared/components/PriorityIcon/PriorityIcon.tsx';
 
 const Backlog = () => {
   const taskList = useSelector(
@@ -37,6 +36,7 @@ const Backlog = () => {
                     <TextField
                       value={taskSelected.title}
                       label="Title"
+                      className={classes.textLabel}
                       readOnly
                       view="clear"
                       width="full"
@@ -44,6 +44,7 @@ const Backlog = () => {
                     <TextField
                       value={taskSelected.status}
                       label="Status"
+                      className={classes.textLabel}
                       readOnly
                       view="clear"
                       width="full"
@@ -51,12 +52,35 @@ const Backlog = () => {
                     <TextField
                       value={taskSelected.priority}
                       label="Priority"
+                      className={classes.textLabel}
+                      readOnly
+                      view="clear"
+                      width="full"
+                    />
+                    <TextField
+                      value={taskSelected?.desc || 'None'}
+                      label="Description"
+                      className={classes.textLabel}
+                      type="textarea"
+                      minRows={3}
                       readOnly
                       view="clear"
                       width="full"
                     />
                   </div>
                   <div className={classes.infoBlock}>
+                    <TextField
+                      value={
+                        taskSelected.storyPoints?.toString() === ''
+                          ? taskSelected.storyPoints?.toString()
+                          : 'Undefined'
+                      }
+                      label="Story points"
+                      className={classes.textLabel}
+                      readOnly
+                      view="clear"
+                      width="full"
+                    />
                     <Text className={classes.textLabel} view="secondary">
                       Executor
                     </Text>
@@ -75,6 +99,7 @@ const Backlog = () => {
                         'Date is undefined'
                       }
                       label="Start date"
+                      className={classes.textLabel}
                       readOnly
                       view="clear"
                       width="full"
@@ -85,6 +110,7 @@ const Backlog = () => {
                         'Date is undefined'
                       }
                       label="End date"
+                      className={classes.textLabel}
                       readOnly
                       view="clear"
                       width="full"
