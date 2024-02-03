@@ -7,7 +7,7 @@ import classes from './Board.module.css';
 import ColumnList from './components/ColumnList/ColumnList';
 import { changeStatus, setColumnsData } from '../../store/reducers/boardSlice';
 import { useDispatch } from 'react-redux';
-import { findItemByID } from '../../utils/findItem';
+import { findItemByID } from '../../shared/utils/findItem.ts';
 import { toDoApi } from '../../store/services/ToDoApi';
 import { useEffect } from 'react';
 import { useSelector } from 'react-redux';

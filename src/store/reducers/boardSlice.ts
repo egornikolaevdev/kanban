@@ -1,6 +1,6 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 import { ITask } from '../../types/ITask';
-import { removeItemByID } from '../../utils/removeItem';
+import { removeItemByID } from '../../shared/utils/removeItem.ts';
 import { IColumn } from '../../types/IColumn';
 
 type TaskStatusType = {
@@ -8,13 +8,6 @@ type TaskStatusType = {
   fromColumnId: string;
   toColumnId?: string;
   task: ITask;
-};
-type TaskStatusesMapType = {
-  Q: string;
-  P: string;
-  C: string;
-  D: string;
-  B: string;
 };
 
 const columns: IColumn[] = [
@@ -40,7 +33,7 @@ const columns: IColumn[] = [
   },
 ];
 
-const TASK_STATUSES_MAP: TaskStatusesMapType = {
+const TASK_STATUSES_MAP = {
   Q: '0',
   P: '1',
   C: '2',
@@ -77,19 +70,8 @@ export const boardSlice = createSlice({
         state[fromColumn].taskList
       );
     },
-    showDetails: (state, action: PayloadAction<ITask>) => {
-      console.log(
-        action.payload.id,
-        action.payload.title,
-        action.payload.desc,
-        action.payload.status,
-        action.payload.priority,
-        action.payload.storyPoints,
-        action.payload.startDate,
-        action.payload.endDate,
-        action.payload.executor?.fullName,
-        action.payload.executor?.position
-      );
+    showDetails: () => {
+
     },
     addTaskToBoard: (state, action: PayloadAction<ITask>) => {
       const toColumn = Number(TASK_STATUSES_MAP[action.payload.status]);

@@ -1,7 +1,7 @@
 import classes from './BacklogTaskCard.module.css';
 import { Card } from '@consta/uikit/Card';
 import { Text } from '@consta/uikit/Text';
-import ContextMenuCustom from '../ContextMenuCustom/ContextMenuCustom';
+import ContextMenuCustom from '../../shared/components/ContextMenuCustom/ContextMenuCustom';
 import { ITask } from '../../types/ITask';
 import PriorityIcon from '../../shared/components/PriorityIcon';
 import { Dispatch } from 'react';

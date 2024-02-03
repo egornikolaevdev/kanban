@@ -5,9 +5,24 @@ import { IconColumns } from '@consta/icons/IconColumns';
 import { cnMixSpace } from '@consta/uikit/MixSpace';
 import { IconFolderClosed } from '@consta/icons/IconFolderClosed';
 import AddTaskModal from '../../shared/components/AddTaskModal';
+import {useContext} from "react";
+import {AppContext, AppContextType} from "../../store/utils/context.tsx";
 
 const Header = () => {
   const navigate = useNavigate();
+  const {currentPage, setCurrentPage} = useContext(AppContext) as AppContextType
+
+  const clickBoardButton = () => {
+    navigate('/board')
+      setCurrentPage('board')
+      console.log('1')
+  }
+  const clickBacklogButton = () => {
+    navigate('/backlog')
+      setCurrentPage('backlog')
+      console.log('2')
+  }
+  console.log(currentPage)
   return (
     <div className={classes.container}>
       <div className={classes.buttonsContainer}>
@@ -18,7 +33,7 @@ const Header = () => {
             view="secondary"
             size="s"
             iconRight={IconColumns}
-            onClick={() => navigate('/board')}
+            onClick={() => clickBoardButton()}
           />
           <Button
             className={cnMixSpace({ mT: 's', pH: '3xl' })}
@@ -26,7 +41,7 @@ const Header = () => {
             view="secondary"
             size="s"
             iconRight={IconFolderClosed}
-            onClick={() => navigate('/backlog')}
+            onClick={() => clickBacklogButton()}
           />
         </div>
         <AddTaskModal />

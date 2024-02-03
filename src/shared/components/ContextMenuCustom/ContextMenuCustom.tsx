@@ -1,12 +1,13 @@
 import { Button } from '@consta/uikit/Button';
 import { ContextMenu } from '@consta/uikit/ContextMenu';
 import { IconKebab } from '@consta/icons/IconKebab';
-import { useRef, useState } from 'react';
+import {useContext, useRef, useState} from 'react';
 import classes from './ContextMenuCustom.module.css';
 import { useDispatch } from 'react-redux';
-import { removeTask, showDetails } from '../../store/reducers/boardSlice';
-import { ITask } from '../../types/ITask';
-import { toBacklog } from '../../store/reducers/backlogSlice';
+import { removeTask } from '../../../store/reducers/boardSlice.ts';
+import { ITask } from '../../../types/ITask.ts';
+import { toBacklog } from '../../../store/reducers/backlogSlice.ts';
+import {AppContext, AppContextType} from "../../../store/utils/context.tsx";
 
 type MenuItemType = {
   label: string;
@@ -18,15 +19,21 @@ type ContextMenuProps = {
 
 const ContextMenuCustom = ({ task }: ContextMenuProps) => {
   const dispatch = useDispatch();
+  const {currentPage} = useContext(AppContext) as AppContextType
   const ref = useRef<HTMLButtonElement>(null);
   const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
   const openDetails = (task: ITask) => {
-    dispatch(showDetails(task));
+    console.log(`${{...task}}`)
   };
 
   const moveTo = (task: ITask) => {
-    dispatch(toBacklog(task));
-    dispatch(removeTask(task));
+    if (currentPage === 'board'){
+      dispatch(toBacklog(task));
+      dispatch(removeTask(task));
+    }
+    else{
+      console.log('To Board Action')
+    }
   };
   const deleteTask = (task: ITask) => {
     dispatch(removeTask(task));
@@ -38,7 +45,7 @@ const ContextMenuCustom = ({ task }: ContextMenuProps) => {
       event: () => openDetails(task),
     },
     {
-      label: 'Move to Backlog/Board',
+      label: currentPage === 'board' ? 'Move to Backlog' : 'Move to Board' ,
       event: () => moveTo(task),
     },
     {

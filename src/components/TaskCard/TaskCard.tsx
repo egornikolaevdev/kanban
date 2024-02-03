@@ -1,13 +1,12 @@
 import {
   Draggable,
   DraggableProvided,
-  DraggableStateSnapshot,
 } from 'react-beautiful-dnd';
 import classes from './TaskCard.module.css';
 import { Text } from '@consta/uikit/Text';
 import { Card } from '@consta/uikit/Card';
 import { Avatar } from '@consta/uikit/Avatar';
-import ContextMenuCustom from '../ContextMenuCustom/ContextMenuCustom';
+import ContextMenuCustom from '../../shared/components/ContextMenuCustom/ContextMenuCustom';
 import { ITask } from '../../types/ITask';
 import PriorityIcon from '../../shared/components/PriorityIcon';
 
@@ -23,7 +22,7 @@ const TaskCard = ({ task }: TaskCardProps) => {
         key={task.id}
         index={Number(task.id)}
       >
-        {(provided: DraggableProvided, snapshot: DraggableStateSnapshot) => (
+        {(provided: DraggableProvided) => (
           <Card
             form="square"
             border

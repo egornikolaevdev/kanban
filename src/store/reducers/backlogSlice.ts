@@ -1,7 +1,7 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 import { ITask } from '../../types/ITask';
 import { IColumn } from '../../types/IColumn';
-import { removeItemByID } from '../../utils/removeItem';
+import { removeItemByID } from '../../shared/utils/removeItem.ts';
 
 const backlogList: IColumn[] = [
   {
