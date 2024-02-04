@@ -51,12 +51,9 @@ export const boardSlice = createSlice({
     changeStatus: (state, action: PayloadAction<TaskStatusType>) => {
       const toColumn = Number(action.payload.toColumnId);
       const fromColumn = Number(action.payload.fromColumnId);
-      // const task = action.payload.task;
       const taskStatus = action.payload.status;
-
-      const newTask: ITask = action.payload.task
+      const newTask = {...action.payload.task}
       newTask.status = taskStatus
-
       state[toColumn].taskList.push(newTask);
       state[fromColumn].taskList = removeItemByID(
         action.payload.task.id,
@@ -74,7 +71,12 @@ export const boardSlice = createSlice({
 
     },
     addTaskToBoard: (state, action: PayloadAction<ITask>) => {
-      const toColumn = Number(TASK_STATUSES_MAP[action.payload.status]);
+      let toColumn:number;
+      if (action.payload.status === 'B'){
+        toColumn = 0
+      }else {
+        toColumn = Number(TASK_STATUSES_MAP[action.payload.status])
+      }
       const newTask: ITask = action.payload;
       state[toColumn].taskList.push(newTask);
     },

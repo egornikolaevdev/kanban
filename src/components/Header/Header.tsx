@@ -5,24 +5,21 @@ import { IconColumns } from '@consta/icons/IconColumns';
 import { cnMixSpace } from '@consta/uikit/MixSpace';
 import { IconFolderClosed } from '@consta/icons/IconFolderClosed';
 import AddTaskModal from '../../shared/components/AddTaskModal';
-import {useContext} from "react";
-import {AppContext, AppContextType} from "../../store/utils/context.tsx";
+import { useContext } from 'react';
+import { AppContext, AppContextType } from '../../store/utils/context.tsx';
 
 const Header = () => {
   const navigate = useNavigate();
-  const {currentPage, setCurrentPage} = useContext(AppContext) as AppContextType
+  const { setCurrentPage } = useContext(AppContext) as AppContextType;
 
   const clickBoardButton = () => {
-    navigate('/board')
-      setCurrentPage('board')
-      console.log('1')
-  }
+    navigate('/board');
+    setCurrentPage('board');
+  };
   const clickBacklogButton = () => {
-    navigate('/backlog')
-      setCurrentPage('backlog')
-      console.log('2')
-  }
-  console.log(currentPage)
+    navigate('/backlog');
+    setCurrentPage('backlog');
+  };
   return (
     <div className={classes.container}>
       <div className={classes.buttonsContainer}>

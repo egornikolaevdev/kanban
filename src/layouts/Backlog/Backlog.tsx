@@ -1,7 +1,7 @@
 import classes from './Backlog.module.css';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../store';
-import { ResponsesEmptyBox } from '@consta/uikit/ResponsesEmptyBox/index';
+import { ResponsesEmptyBox } from '@consta/uikit/ResponsesEmptyBox';
 import { Card } from '@consta/uikit/Card/index';
 import BacklogTaskCard from '../../components/BacklogCard/BacklogTaskCard.tsx';
 import { Text } from '@consta/uikit/Text/index';

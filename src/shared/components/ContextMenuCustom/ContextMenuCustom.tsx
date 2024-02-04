@@ -4,10 +4,11 @@ import { IconKebab } from '@consta/icons/IconKebab';
 import {useContext, useRef, useState} from 'react';
 import classes from './ContextMenuCustom.module.css';
 import { useDispatch } from 'react-redux';
-import { removeTask } from '../../../store/reducers/boardSlice.ts';
+import {addTaskToBoard, removeTask} from '../../../store/reducers/boardSlice.ts';
 import { ITask } from '../../../types/ITask.ts';
-import { toBacklog } from '../../../store/reducers/backlogSlice.ts';
+import {addTaskToBacklog, removeFromBacklog} from '../../../store/reducers/backlogSlice.ts';
 import {AppContext, AppContextType} from "../../../store/utils/context.tsx";
+import * as React from "react";
 
 type MenuItemType = {
   label: string;
@@ -22,30 +23,24 @@ const ContextMenuCustom = ({ task }: ContextMenuProps) => {
   const {currentPage} = useContext(AppContext) as AppContextType
   const ref = useRef<HTMLButtonElement>(null);
   const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
-  const openDetails = (task: ITask) => {
-    console.log(`${{...task}}`)
-  };
 
-  const moveTo = (task: ITask) => {
-    if (currentPage === 'board'){
-      dispatch(toBacklog(task));
-      dispatch(removeTask(task));
-    }
-    else{
-      console.log('To Board Action')
-    }
-  };
-  const deleteTask = (task: ITask) => {
-    dispatch(removeTask(task));
-  };
-
-  const menuItems: MenuItemType[] = [
+  const boardMenuItems: MenuItemType[] = [
     {
       label: 'Details',
       event: () => openDetails(task),
     },
     {
-      label: currentPage === 'board' ? 'Move to Backlog' : 'Move to Board' ,
+      label: 'Move to Backlog' ,
+      event: () => moveTo(task),
+    },
+    {
+      label: 'Remove',
+      event: () => deleteTask(task),
+    },
+  ];
+  const backlogMenuItems: MenuItemType[] = [
+    {
+      label: 'Move to Board' ,
       event: () => moveTo(task),
     },
     {
@@ -54,20 +49,44 @@ const ContextMenuCustom = ({ task }: ContextMenuProps) => {
     },
   ];
 
+  const openDetails = (task: ITask) => {
+    console.log(`${{...task}}`)
+  };
+
+  const moveTo = (task: ITask) => {
+    if (currentPage === 'board'){
+      dispatch(addTaskToBacklog(task));
+      dispatch(removeTask(task));
+    }
+    else{
+      dispatch(addTaskToBoard(task))
+      dispatch(removeFromBacklog(task));
+    }
+  };
+  const deleteTask = (task: ITask) => {
+    dispatch(removeTask(task));
+  };
+
+  const handleClickButton = (event:React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+    event.stopPropagation()
+    setIsMenuOpen(!isMenuOpen)
+  }
+
   return (
     <div>
       <Button
+
         className={classes.button}
         onlyIcon
         iconLeft={IconKebab}
         size="s"
         view="clear"
         ref={ref}
-        onClick={() => setIsMenuOpen(!isMenuOpen)}
+        onClick={(event:React.MouseEvent<HTMLButtonElement, MouseEvent>) => handleClickButton(event) }
       />
       <ContextMenu
         isOpen={isMenuOpen}
-        items={menuItems}
+        items={currentPage === 'board' ? boardMenuItems : backlogMenuItems}
         getItemLabel={(item) => item.label}
         getItemOnClick={(item) => item.event}
         anchorRef={ref}

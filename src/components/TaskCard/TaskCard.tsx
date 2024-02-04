@@ -35,7 +35,7 @@ const TaskCard = ({ task }: TaskCardProps) => {
           >
             <div className={classes.taskInfo}>
               <div className={classes.taskTitle}>
-                <Text size="s">{`${task.title} ${task.id}`}</Text>
+                <Text size="s">{`${task.title} ${task.id} ${task.status}`}</Text>
               </div>
               <ContextMenuCustom task={task} />
             </div>

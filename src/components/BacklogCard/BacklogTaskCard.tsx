@@ -4,10 +4,10 @@ import { Text } from '@consta/uikit/Text';
 import ContextMenuCustom from '../../shared/components/ContextMenuCustom/ContextMenuCustom';
 import { ITask } from '../../types/ITask';
 import PriorityIcon from '../../shared/components/PriorityIcon';
-import { Dispatch } from 'react';
+import {Dispatch, SetStateAction} from 'react';
 type BacklogCardProps = {
   task: ITask;
-  setSelectedTask: Dispatch<ITask>;
+  setSelectedTask: Dispatch<SetStateAction<ITask | null>>;
 };
 
 const BacklogTaskCard = ({ task, setSelectedTask }: BacklogCardProps) => {
