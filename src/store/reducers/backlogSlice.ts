@@ -15,11 +15,6 @@ export const backlogSlice = createSlice({
   name: 'backlogSlice',
   initialState: backlogList,
   reducers: {
-    // toBacklog: (state, action: PayloadAction<ITask>) => {
-    //   const newTask = {...action.payload}
-    //   newTask.status = 'B'
-    //   state[0].taskList.push(newTask);
-    // },
     removeFromBacklog: (state, action: PayloadAction<ITask>) => {
       state[0].taskList = removeItemByID(action.payload.id, state[0].taskList);
     },
